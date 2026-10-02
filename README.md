@@ -9,14 +9,14 @@
     <img alt="Platforms" src="https://img.shields.io/badge/platforms-linux%20%7C%20windows%20%7C%20macos-lightgrey.svg">
     <img alt="SMB" src="https://img.shields.io/badge/SMB2-pure--rust-informational.svg">
     <img alt="ESC8" src="https://img.shields.io/badge/use-ESC8%20%2F%20coercion-8A2BE2.svg">
-    <a href="https://github.com/g0h4n/RustHound-CE/issues/72"><img alt="localgroups-rs" src="https://img.shields.io/badge/RustHound--CE-%2372-8A2BE2.svg"></a>
+    <a href="https://github.com/g0h4n/RustHound-CE/issues/72"><img alt="iswebclientrunning-rs" src="https://img.shields.io/badge/RustHound--CE-%2372-8A2BE2.svg"></a>
 </p>
 
 <hr />
 
 **IsWebClientRunning-rs** probes Windows hosts for a running **WebClient (WebDAV) service** and turns the result into BloodHound-shaped `Computer` data: the `IsWebClientRunning` property. For each target it mounts `IPC$` and opens the named pipe `\PIPE\DAV RPC SERVICE`; a host that answers is running WebClient and is therefore a candidate for **authentication coercion to HTTP** and, from there, **ESC8** (AD CS web-enrollment) NTLM relaying.
 
-It is the probe equivalent of [Hackndo's `webclientservicescanner`](https://github.com/Hackndo/WebclientServiceScanner) and NetExec's `webdav` check, rewritten in pure Rust so it can move into the [RustHound-CE](https://github.com/g0h4n/RustHound-CE) collection as the `Computer`:`IsWebClientRunning` field SharpHound fills. It is built on [icedracon](https://github.com/icedracon)'s `smb2-client` stack, the same one behind [LocalGroups-rs](https://github.com/g0h4n/LocalGroups-rs) and [HasSession-rs](https://github.com/g0h4n/HasSession-rs), and its `src/transport/` folder is copied unchanged from RustHound-CE so the eventual port is a move rather than a rewrite.
+It is the probe equivalent of [Hackndo's `webclientservicescanner`](https://github.com/Hackndo/WebclientServiceScanner) and NetExec's `webdav` check, rewritten in pure Rust so it can move into the [RustHound-CE](https://github.com/g0h4n/RustHound-CE) collection as the `Computer`:`IsWebClientRunning` field SharpHound fills. It is built on [icedracon](https://github.com/icedracon)'s `smb2-client` stack, the same one behind [iswebclientrunning-rs](https://github.com/g0h4n/iswebclientrunning-rs) and [HasSession-rs](https://github.com/g0h4n/HasSession-rs), and its `src/transport/` folder is copied unchanged from RustHound-CE so the eventual port is a move rather than a rewrite.
 
 - [HELP.md](HELP.md) - How to compile it? How to use it? All options with examples.
 - [CHANGELOG.md](CHANGELOG.md) - A record of all significant version changes.
@@ -34,9 +34,12 @@ cargo build --release
 
 ## Installation
 
+
+<a href="https://crates.io/crates/iswebclientrunning-rs"><img alt="Crates.io Version" src="https://img.shields.io/crates/v/iswebclientrunning-rs"> <img alt="Crates.io Total Downloads" src="https://img.shields.io/crates/d/iswebclientrunning-rs?color=f74c00"></a>
+
 ```bash
-# Install and/or update iswebclientrunning-rs from the cargo command
-cargo install --path .
+# Install and/or update iswebclientrunning-rs from cargo command
+cargo install iswebclientrunning-rs
 ```
 
 ## Demo
