@@ -115,6 +115,6 @@ The default output is a colored table; `--json` / `--compact` switch to JSON, `-
 
 # Credits
 
-Built on [icedracon](https://github.com/icedracon)'s pure-Rust [`smb2-client`](https://github.com/icedracon/smb2-client). The Kerberos and GSS helpers in `src/transport/` are RustHound-CE's, themselves ported from [adhammer](https://github.com/icedracon/adhammer); the ccache is parsed in-crate and the AP-REQ built with [`picky-krb`](https://github.com/Devolutions/picky-rs), so there is no system GSSAPI dependency. The detection itself follows [Hackndo's `webclientservicescanner`](https://github.com/Hackndo/WebclientServiceScanner) and the WebClient-coercion research by [Elad Shamir](https://posts.specterops.io/) and the SpecterOps ESC8 write-up.
+Built on [icedracon](https://github.com/icedracon)'s pure-Rust [`smb2-client`](https://github.com/icedracon/smb2-client). The Kerberos and GSS helpers in `src/transport/` are RustHound-CE's, themselves ported from [adhammer](https://github.com/icedracon/adhammer); the ccache is parsed in-crate and the AP-REQ built with [`picky-krb`](https://github.com/Devolutions/picky-rs), so there is no system GSSAPI dependency. The detection itself follows [Hackndo's `webclientservicescanner`](https://github.com/Hackndo/WebclientServiceScanner) and the initial research by [@tifkin_](https://x.com/tifkin_/status/1419806476353298442?s=46).
 
 Authorized use only. This tool is for engagements you have written permission to perform.
