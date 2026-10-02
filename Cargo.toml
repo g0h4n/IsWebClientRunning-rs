@@ -1,0 +1,62 @@
+[package]
+name = "iswebclientrunning-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+authors = ["g0h4n <https://twitter.com/g0h4n_0>"]
+description = "WebClient/WebDAV service probe (IsWebClientRunning) for BloodHound Community Edition, written in Rust."
+license = "MIT"
+repository = "https://github.com/g0h4n/IsWebClientRunning-rs"
+homepage = "https://github.com/g0h4n/IsWebClientRunning-rs"
+keywords = ["bloodhound", "active-directory", "webdav", "esc8", "coercion"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "iswebclientrunning-rs"
+path = "src/main.rs"
+
+[dependencies]
+# ─────────────────────────────────────────────────────────────────────────────
+# SMB + Kerberos transport (icedracon pure-Rust stack).
+# ─────────────────────────────────────────────────────────────────────────────
+# `src/transport/` is copied verbatim from RustHound-CE / LocalGroups-rs, so the
+# Kerberos/GSS pins below are kept byte-identical to theirs. Do not bump them in
+# isolation: fix upstream, then re-copy transport/ and these lines together.
+# ref: https://github.com/g0h4n/RustHound-CE/blob/main/Cargo.toml
+smb2-client    = "0.2"        # SMB2 transport: NTLMv2 / PTH / Kerberos SESSION_SETUP, named pipes
+ms-pac-forge   = "0.1.3"      # RC4 (etype 23) checksum/crypt used by transport/kerberos.rs
+picky-krb      = "=0.11.1"    # Kerberos ASN.1 (TGS-REQ / AP-REQ) + crypto
+picky-asn1     = "0.10"
+picky-asn1-der = "0.5"
+rand           = "0.8"        # thread_rng() for nonces/subkeys (picky-krb requires ^0.8)
+
+# async runtime (the transport is async; "full" gives rt-multi-thread, net,
+# time, macros, sync for the worker Semaphore / JoinSet).
+tokio = { version = "1", features = ["full"] }
+
+# error handling (transport returns anyhow::Result)
+anyhow = "1"
+
+# serialization
+serde      = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# output / logging
+comfy-table = "7"
+colored     = "3.1"
+log         = "0.4"
+env_logger  = "0.11"
+chrono      = { version = "0.4", default-features = false, features = ["clock"] }
+
+# scan progress bar
+indicatif   = "0.17"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"
